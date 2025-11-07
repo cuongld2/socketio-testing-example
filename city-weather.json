@@ -1,0 +1,37 @@
+[
+    {
+        "city": "New York",
+        "weather": "Sunny",
+        "temperatureC": 25,
+        "temperatureF": 76,
+        "summary": "Hot and humid"
+    },
+    {
+        "city": "Texas",
+        "weather": "Sunny",
+        "temperatureC": 14,
+        "temperatureF": 60,
+        "summary": "Warm and humid"
+    },
+    {
+        "city": "Chicago",
+        "weather": "Sunny",
+        "temperatureC": 20,
+        "temperatureF": 72,
+        "summary": "Warm and humid"
+    },
+    {
+        "city": "Ohio",
+        "weather": "Rainy",
+        "temperatureC": 14,
+        "temperatureF": 60,
+        "summary": "Warm and humid"
+    },
+    {
+        "city": "Santiago",
+        "weather": "Sunny",
+        "temperatureC": 20,
+        "temperatureF": 72,
+        "summary": "Warm and humid"
+    }
+]
