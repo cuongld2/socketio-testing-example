@@ -6,13 +6,15 @@ import cityWeather from '../city-weather.json';
 const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, { 
-  cors:{
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
-    credentials: false,
-    maxAge: 3600
-  }
+  // cors:{
+  //   origin: "http://localhost:3000",
+  //   methods: ["GET", "POST"],
+  //   credentials: false,
+  //   maxAge: 3600
+  // }
   /* options */ });
+
+  const SUPPORTED_EVENTS = new Set(['weather']);
 
 io.engine.on("connection_error", (err) => {
   console.log(err.req);      // the request object
@@ -30,8 +32,19 @@ io.on("connection", (socket) => {
     // You might want to log the error, notify administrators,
     // or attempt to recover if possible (though often, a client-side reconnect is needed).
   });
-  socket.emit("hello", "world");
-  console.log("Upp");
+  socket.onAny((eventName, ...args) => {
+        // 2. Check if the incoming event name is in the supported list
+        if (!SUPPORTED_EVENTS.has(eventName)) {
+            console.warn(`Blocked unsupported event: ${eventName}`);
+            // Optionally, you can disconnect the socket or send an error message
+            socket.on(eventName, () => {
+                socket.emit(eventName, 'Unsupported event');
+                socket.disconnect(true); // Forcefully disconnect the socket
+            });
+            // throw new Error(`Unsupported event: ${eventName}`);
+        }
+      });
+      
   socket.on("weather", (city) => {
     console.log(cityWeather.filter((weather) => weather.city === city));
     socket.emit("weather", cityWeather.filter((weather) => weather.city === city)[0]);
